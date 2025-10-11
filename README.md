@@ -1,25 +1,55 @@
-# File
-Bhh
-SJF
-
 #include<stdio.h>
+#include<conio.h>
 
-int main()
+char Mainstr[100],Pat[100],Replace[100],ans[100];
+int i,j,c,m,k;
 
-{ int bt[20],p[20],wt[20],tat[20].i.j.n.total=0,pos,temp: float avg_wt,avg_tat; printf("Enter number of process: "); scanf("%d",&n); printf("\nEnter Burst Time:\n"); for(i=0;i<n;i++)
-
-{ printf("p%d: ",i+1); scanf("%d", &bt[i]); p[i] = i + 1
-
-} for *( i = 0; i < n ;i+++) { pos=i; xr( j = i + 1j <n* j++) { if(bt[j]<bt[pos]) pos-j:
-
-} temp=bt[i]; bt[i]=bt[pos]; bt[pos]=temp; temp=p[i]: p[i]=p[pos]: p[pos]=temp;
-
-} wt[0] = 0 r( i = 1 ;i<n:i+++) { wt[i] = 0 } total+=wt[i]; or( j = 0 ;j<i i j++)
-
-avg_wt=(float)total/n; total=0; printf("\nProcess\t Burst Time \tWaiting Time\tTurnaround Time"); or( i = 0; i < n ;i+++) { [i]; total+=tat[i]:
-
+void read()
+{
+	printf("\nEnter a string \n");
+	gets(Mainstr);
+	printf("\nEnter a search string \n");
+	flushall();
+	gets(Pat);
+	printf("\nEnter a replace string \n");
+	flushall();
+	gets(Replace);
 }
 
-printf("\np%d\t\t %d\t\t %d\t\t\t%d",p[i].bt[i].wt[i].tat[i]);
-
-} avg_tat=(float) total/n; printf("\n\nAverage Waiting Time=%f".avg_wt); printf("\nAverage Turnaround Time=%f\n",avg_tat); return 0;
+void find_replace()
+{
+	i = m = c = j = 0;
+	while ( Mainstr[c] != '\0')
+	{
+		if ( Mainstr[m] == Pat[i] ) // ...... matching
+		{
+			i++;
+			m++;
+			if ( Pat[i] == '\0') //.....found occ
+			{
+				//.... copy replace string in ans string .....
+			for(k=0; Replace[k] != '\0';k++,j++) {
+				ans[j] = Replace[k];}
+			i=0;
+			c=m;
+			}
+		}
+		else //... mismatch
+		{
+			ans[j] = Mainstr[c];
+			j++;
+			c++;
+			m = c;
+			i=0;
+		}
+	}
+	ans[j] = '\0';
+	printf("\nThe resultant string is\n%s" ,ans);
+}
+void main()
+{
+	clrscr();
+	read();
+	find_replace();
+	getch();
+}
