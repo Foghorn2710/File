@@ -1,116 +1,91 @@
 #include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
-#include<math.h>
-#define MAX 50
+#define size 5
 
-int stack[MAX];
-char post[MAX];
-int top=-1;
-
-void pushstack(int tmp);
-void calculator(char c);
+char q[size];
+int front=-1, rear=-1,count=0;
+void insert();
+void delet();
+void display();
 
 void main()
+{
+	int ch;
+	for(;;)
+	{
+		printf(" \n 1.Insert 2. Delete 3. Display 4.Exit\n");
+		printf("\n Enter Your Choice \n");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				insert();
+				break;
+			case 2:
+				delet();
+				break;
+			case 3:
+				display();
+				break;
+			case 4:
+				exit(0);
+				break;
+			default:
+				printf("Invalid Choice!");
+		}
+	}
+
+}
+
+void insert()
+{
+	char item;
+	printf("Enter the element to be inserted to the queue \n");
+	scanf("%c",&item);
+	if(count= = size)
+		printf(" \n Queue is Overflow ! \n");
+	else
+	{
+		if(front==-1)
+		{
+			front=0;
+rear=0;
+		}
+		else
+			rear=(rear+1)%size;
+		q[rear]=item;
+count++;
+	}
+}
+
+void display()
 {
 	int i;
-	printf("Insert a postfix notation :: ");
-	scanf("%s",post);
-
-	for(i=0;i<strlen(post);i++)
+	if(count ==0)
+		printf("Queue is empty \n");
+	else
 	{
-		if(post[i]>='0' && post[i]<='9')
+		for(i=front;i!=rear;i=(i+1)%size)
 		{
-			pushstack(i);
+			printf("q[%d]=%c \n",i, q[i]);
 		}
-		if(post[i]=='+' || post[i]=='-' || post[i]=='*' || post[i]=='/' || post[i]=='^')
-		{
-			calculator(post[i]);
-		}
+		printf("q[%d]=%c \n",i, q[i]);
 	}
-	printf("\n\nResult :: %d",stack[top]);
 }
 
-void pushstack(int tmp)
+void delet()
 {
-	top++;
-	stack[top]=(int)(post[tmp]-48);
-}
-
-void calculator(char c)
-{
-	int a,b,ans;
-	b=stack[top];
-	top--;
-	a=stack[top];
-	top--;
-
-
-	switch(c)
+	int del_item=0;
+	
+	if(count==0)
+		printf("Queue Underflow!");
+	else
 	{
-		case '+':
-			ans=b+a;
-			break;
-		case '-':
-			ans=b-a;
-			break;
-		case '*':
-			ans=b*a;
-			break;
-		case '/':
-			ans=b/a;
-			break;
-		case '^':
-			ans=pow(b,a);
-			break;
-		default:
-			ans=0;
+		del_item=q[front];
+		printf(" \nEleement deleted from the quees is '%c' at pos=%d \n",del_item, front);
+		front=(front+1)%size;
+		count--;
+		
 	}
-top++;
-stack[top]=ans;
 }
 
-/* Output
-Insert a postfix notation :: 22^32*+
-
-Result :: 10
-*/
-
-
-b. Solving Tower of Hanoi problem with n disks 
-Program
-#include<stdio.h>
-void towers(int, char, char, char);
-void main()
-{
-	int num;
-	clrscr();
-	printf("enter the number of disks : ");
-	scanf("%d", &num);
-	printf("the sequence of moves involved in the ower of honai are : \n");
-	towers(num, 'A','C','B');
-	getch();
-}
-
-void towers(int num, char frompeg, char topeg, char auxpeg)
-{
-	if(num == 1)
-	{
-		printf("\n MOVE DISK 1 FROM PEG %c TO PEG %c", frompeg, topeg);
-		return;
-	}
-	towers( num -1,  frompeg,  auxpeg ,topeg);
-	printf("\n MOVE DISK %d FROM PEG %c TO PEG %c", num,frompeg, topeg);
-	towers( num -1,  auxpeg ,topeg ,frompeg );
-}
-
-
-/* Output
-Run 1:
-enter the number of disks : 2
-the sequence of moves involved in the tower of hanoi are :
-
- MOVE DISK 1 FROM PEG A TO PEG B
- MOVE DISK 2 FROM PEG A TO PEG C
- MOVE DISK 1 FROM PEG B TO PEG C
-*/
+			
