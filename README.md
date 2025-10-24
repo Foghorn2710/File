@@ -1,25 +1,62 @@
-#include<stdio.h>
-#define max 25 
-void main()
+#include <stdio.h>
+#include <stdlib.h>
 
-{ int frag[max],b[max].f[max],i,j,nb,nf.temp,highest=0; static int bf[max],ff[max]; printf("\n\tMemory Management Scheme - First Fit"); printf("\nEnter the number of blocks:"); scanf("%d", &nb); printf("Enter the number of files:"); scanf("%d",&nf); printf("\nEnter the size of the blocks:-\n"); for(i=1;i<=nb;i++)
+typedef struct{
+    char *dayName;
+    int date;
+    char *activity;
+}Day;
 
-{ printf("Block %d:",i); scanf("%d",&b[i]);
+void create(Day *day) {
+    day🡪dayName = (char *)malloc(sizeof(char) * 20);
+    day🡪activity = (char *)malloc(sizeof(char) * 100);
 
-} printf("Enter the size of the files :-\n"); for(i=1;i<=nf;i++)
+    printf("Enter the day name: ");
+    scanf("%s", day🡪dayName);
 
-{ printf("File %d:",i); scanf("%d",&f[i]);
+    printf("Enter the date: ");
+    scanf("%d", &day🡪date);
 
+    printf("Enter the activity for the day: ");
+    scanf(" %s", day🡪activity);
 }
 
-for(i=1;i<=nf;i++) { { for(j=1;j<=nb;j++) if(bf[j]!=1) //if bf[j] is not allocated
-
-{ temp=b[j]-f[i]; if (temp>=0) if(highest<temp)
-
-{ ff[i]=j; highest-temp: }
-
+void read(Day *calendar, int size) {
+    int i;
+    for (i = 0; i < size; i++) {
+        printf("Enter details for Day %d:\n", i + 1);
+        create(&calendar[i]);
+    }
 }
 
-} bf[ff[i]]=1; frag[i]=highest; highest-0;
+void display(Day *calendar, int size) {
+    int i;
+    printf("\nWeek's Activity Details:\n");
+    for (i = 0; i < size; i++) {
+        printf("Day %d:\n", i + 1);
+        printf("Day Name: %s\n", calendar[i].dayName);
+        printf("Date: %d\n", calendar[i].date);
+        printf("Activity: %s\n", calendar[i].activity);
+        printf("\n");
+    }
+}
 
-} printf("\nFile_no:\tFile_size:\tBlock_no:\tBlock_size:\tFragement"); for(i=1;i<=nf;i++) printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d", i.f[i].ff[i],b[ff[i]].frag[i]); }
+
+int main() {
+    int size;
+    Day *calendar;
+    printf("Enter the number of days in the week: ");
+    scanf("%d", &size);
+
+    calendar = (Day *)malloc(sizeof(Day) * size);
+
+    if (calendar == NULL) {
+        printf("Memory allocation failed. Exiting program.\n");
+        return 1;
+    }
+
+    read(calendar, size);
+    display(calendar, size);
+
+    return 0;
+}
