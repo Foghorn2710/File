@@ -1,62 +1,75 @@
+#define SIZE 50 			/* Size of Stack */
+#include <ctype.h>
 #include <stdio.h>
-#include <stdlib.h>
 
-typedef struct{
-    char *dayName;
-    int date;
-    char *activity;
-}Day;
+char s[SIZE];
 
-void create(Day *day) {
-    day🡪dayName = (char *)malloc(sizeof(char) * 20);
-    day🡪activity = (char *)malloc(sizeof(char) * 100);
+int top = -1; 				/* Global declarations */
 
-    printf("Enter the day name: ");
-    scanf("%s", day🡪dayName);
-
-    printf("Enter the date: ");
-    scanf("%d", &day🡪date);
-
-    printf("Enter the activity for the day: ");
-    scanf(" %s", day🡪activity);
+void push(char elem) 			/* Function for PUSH operation */
+{
+	s[++top] = elem;
 }
 
-void read(Day *calendar, int size) {
-    int i;
-    for (i = 0; i < size; i++) {
-        printf("Enter details for Day %d:\n", i + 1);
-        create(&calendar[i]);
-    }
+char pop()				 /* Function for POP operation */
+{
+	return (s[top--]);
 }
 
-void display(Day *calendar, int size) {
-    int i;
-    printf("\nWeek's Activity Details:\n");
-    for (i = 0; i < size; i++) {
-        printf("Day %d:\n", i + 1);
-        printf("Day Name: %s\n", calendar[i].dayName);
-        printf("Date: %d\n", calendar[i].date);
-        printf("Activity: %s\n", calendar[i].activity);
-        printf("\n");
-    }
+int pr(char elem) 			/* Function for precedence */
+{
+switch (elem)
+{
+		case '#':
+			return 0;
+		case '(':
+			return 1;
+		case '+':
+		case '-':
+			return 2;
+		case '*':
+		case '/':
+		case '%':
+			return 3;
+		case '^':
+			return 4;
+}
 }
 
+void main() 				/* Main Program */
+{
+	char infx[50], pofx[50], ch, elem;
+	int i = 0, k = 0;
+	printf("\n\nRead the Infix Expression ? ");
+	scanf("%s", infx);
+	push('#');
 
-int main() {
-    int size;
-    Day *calendar;
-    printf("Enter the number of days in the week: ");
-    scanf("%d", &size);
 
-    calendar = (Day *)malloc(sizeof(Day) * size);
 
-    if (calendar == NULL) {
-        printf("Memory allocation failed. Exiting program.\n");
-        return 1;
-    }
+	while ((ch = infx[i++]) != '\0')
+	{
+		if (ch == '(')
+			push(ch);
+		else if (isalnum(ch))
+			pofx[k++] = ch;
+		else if (ch == ')')
+		{
+			while (s[top] != '(')
+			pofx[k++] = pop();
+			elem = pop(); 			/* Remove ( */
+		}
+		else /* Operator */
+		{
+			while (pr(s[top]) >= pr(ch))
+			pofx[k++] = pop();
+			push(ch);
+		}
+}
 
-    read(calendar, size);
-    display(calendar, size);
+	while (s[top] != '#') /* Pop from stack till empty */
+		pofx[k++] = pop();
 
-    return 0;
+	pofx[k] = '\0'; /* Make pofx as valid string */
+	
+printf("\n\nGiven Infix Expn: %s Postfix Expn: %s\n", infx, pofx);
 }
