@@ -1,75 +1,46 @@
-#define SIZE 50 			/* Size of Stack */
-#include <ctype.h>
-#include <stdio.h>
-
-char s[SIZE];
-
-int top = -1; 				/* Global declarations */
-
-void push(char elem) 			/* Function for PUSH operation */
-{
-	s[++top] = elem;
+class MyPoint {
+ private int x;
+ private int y;
+ public MyPoint() {
+ this(0, 0); // Default constructor setting coordinates to (0, 0)
+ }
+ public MyPoint(int x, int y) {
+ this.x = x;
+ this.y = y;
+ }
+ public void setXY(int x, int y) {
+ this.x = x;
+ this.y = y;
+ }
+ public int[] getXY() {
+ return new int[]{x, y};
+ }
+ public String toString() {
+ return "(" + x + ", " + y + ")";
+ }
+ public double distance(int x, int y) {
+ int xDiff = this.x - x;
+ int yDiff = this.y - y;
+ return Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+ }
+ public double distance(MyPoint another) {
+ return distance(another.x, another.y);
+ }
+ public double distance() {
+ return distance(0, 0);
+ }
 }
-
-char pop()				 /* Function for POP operation */
-{
-	return (s[top--]);
-}
-
-int pr(char elem) 			/* Function for precedence */
-{
-switch (elem)
-{
-		case '#':
-			return 0;
-		case '(':
-			return 1;
-		case '+':
-		case '-':
-			return 2;
-		case '*':
-		case '/':
-		case '%':
-			return 3;
-		case '^':
-			return 4;
-}
-}
-
-void main() 				/* Main Program */
-{
-	char infx[50], pofx[50], ch, elem;
-	int i = 0, k = 0;
-	printf("\n\nRead the Infix Expression ? ");
-	scanf("%s", infx);
-	push('#');
-
-
-
-	while ((ch = infx[i++]) != '\0')
-	{
-		if (ch == '(')
-			push(ch);
-		else if (isalnum(ch))
-			pofx[k++] = ch;
-		else if (ch == ')')
-		{
-			while (s[top] != '(')
-			pofx[k++] = pop();
-			elem = pop(); 			/* Remove ( */
-		}
-		else /* Operator */
-		{
-			while (pr(s[top]) >= pr(ch))
-			pofx[k++] = pop();
-			push(ch);
-		}
-}
-
-	while (s[top] != '#') /* Pop from stack till empty */
-		pofx[k++] = pop();
-
-	pofx[k] = '\0'; /* Make pofx as valid string */
-	
-printf("\n\nGiven Infix Expn: %s Postfix Expn: %s\n", infx, pofx);
-}
+public class TestMyPoint {
+ public static void main(String[] args) {
+ MyPoint point1 = new MyPoint();
+ MyPoint point2 = new MyPoint(3, 4);
+ // Testing setXY() method
+ point1.setXY(5, 6);
+ // Testing getXY() method
+ int[] coordinates = point1.getXY();
+ System.out.println("Point 1 coordinates: (" + coordinates[0] + ", " + coordinates[1] + ")");
+ // Testing toString() method
+ System.out.println("Point 2: " + point2);
+ // Testing distance() methods
+ System.out.println("Distance between Point 1 and Point 2: " + point1.distance(point2));
+ System.out.println("Distance from Point 1 to origin: " + point1.distance());}}
