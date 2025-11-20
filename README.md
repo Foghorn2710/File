@@ -1,20 +1,25 @@
-class Outer {
- void display() {
- System.out.println("This is the display() method of the outer class.");
- }
- class Inner {
- void display() {
- System.out.println("This is the display() method of the inner class.");
- }
+class DivisionByZeroException extends Exception {
+ public DivisionByZeroException(String message) {
+ super(message);
  }
 }
 public class Main {
  public static void main(String[] args) {
- Outer outer = new Outer();
- // Calling the display() method of the outer class
- outer.display();
- // Creating an instance of the inner class and calling its display() method
- Outer.Inner inner = outer.new Inner();
- inner.display();
+ try {
+ int numerator = 10;
+ int denominator = 0;
+ // Perform division and throw exception if denominator is zero
+ if (denominator == 0) {
+ throw new DivisionByZeroException("Division by zero error!");
+ }
+ int result = numerator / denominator;
+ System.out.println("Result of division: " + result);
+ } catch (DivisionByZeroException e) {
+ System.out.println("Caught DivisionByZeroException: " + e.getMessage());
+ } catch (ArithmeticException e) {
+ System.out.println("Caught ArithmeticException: " + e.getMessage());
+ } finally {
+ System.out.println("Finally block executed.");
+ }
  }
 }
