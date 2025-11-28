@@ -1,71 +1,174 @@
-#include<stdio.h>
+#include <stdio.h>
 
-#include<conio.h>
+int request[50];
 
-#include<stdlib.h>
+int SIZE;
 
-void main()
+int pre;
 
-{ int f[50], p,i, st, len, j, c, k, a;
+int head;
 
-clrscr();
+int uptrack;
 
-for(i=0;i<50;i++)
+int downtrack;
 
-f[i]=0; printf("Enter how many blocks already allocated: ");
+struct max{
 
-scanf("%d",&p);
+int up:
 
-printf("Enter blocks already allocated: ");
+int down;
 
-for(i=0;i<p;i++)
+} kate [50];
 
-{
-
-scanf("%d",&a);
-
-f[a]=1;
-
-} x: printf("Enter index starting block and length: ");
-
-scanf("%d%d", &st, &len);
-
-k=len;
-
-if(f[st]==0)
-
-for(j=st;j<(st+k);j++) {
-
-{ { if(f[j]==0)
-
-f[j]=1; printf("%d---->%d\n",j,f[j]);
+int dist (int a, int b) {
 
 }
 
-else
+if (a > b) return ab:
 
-{ printf("%d Block is already allocated \n",j);
+return ba;
 
-k++;
+void sort(int n) {
+
+int i, j;
+
+for ( i = 0; i < n - 1 ;i+++) for ( j = 0; j < n - i - 1 ;j++) if (request[j] > request[j + 1]) { }
+
+int temp = request[j]:
+
+request[j] = request[j + 1];
+
+request[j+1] = temp;
 
 }
 
 }
 
-else
+j = 0
 
-} printf("%d starting block is already allocated \n",st); printf("Do you want to enter more file (Yes - 1/No-0)");
+i = 0
 
-scanf("%d", &c);
+kate[j].down = request[i]:
 
-if(c==1)
+while (request[i] != head) { j++;
 
-goto x;
+}
 
-else
+i++;
 
-exit(0);
+downtrack = j;
 
-getch();
+i++;
+
+j = 0
+
+while (in) {
+
+kate[j].up = request[i];
+
+j++;
+
+i++;
+
+}
+
+}
+
+uptrack = j;
+
+void scan(int n) {
+
+int i;
+
+int seekcount = 0;
+
+printf("SEEK SEQUENCE = ");
+
+sort(n);
+
+if (pre <head) {
+
+for ( i = 0 ; i < uptrack; i++) {
+printf("%d ", head);
+
+seekcount = seekcount + dist (head, kate[i].up);
+
+head kate[i].up;
+
+}
+
+for (i = downtrack - 1; i > 0 i--) {
+
+printf("%d ", head);
+
+seekcount = seekcount + dist(head, kate [i].down);
+
+head = kate[i].down;
+
+}
+
+}
+
+else {
+
+for (i downtrack - 1; i >= 0 ;i--) {
+
+printf("%d", head);
+
+seekcount = seekcount + dist (head, kate[i].down);
+
+head kate[i].down;
+
+}
+
+for ( i = 0 i < uptrack - 1; i++) {
+
+printf("%d", head);
+
+seekcount = seekcount + dist (head, kate[i].up);
+
+head = kate[i].up:
+
+}
+
+}
+
+printf("%d\nTOTAL DISTANCE:%d", head, seekcount);
+
+}
+
+int main() {
+
+int n, i;
+
+printf("ENTER THE DISK SIZE:\n");
+
+scanf("%d", &SIZE);
+
+printf("ENTER THE NO OF REQUEST SEQUENCE:\n");
+
+scanf("%d", &n);
+
+printf("ENTER THE REQUEST SEQUENCE:\n");
+
+for i = 0 i < n; i++)
+
+scanf("%d", &request[i]);
+
+printf("ENTER THE CURRENT HEAD :\n");
+
+scanf("%d", &head);
+
+request[n] = head;
+
+request[ n + 1 ]= SIZE - 1;
+
+request [n + 2] = 0
+
+printf("ENTER THE PRE REQUEST :\n");
+
+scanf("%d", &pre);
+
+scan(n + 3);
 
 }
