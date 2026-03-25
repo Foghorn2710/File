@@ -1,53 +1,54 @@
-class WaterJugState:
-def __init__(self, jug1, jug2):
-self.jug1 = jug1
-self.jug2 = jug2
-def __eq__(self, other):
-return self.jug1 == other.jug1 and self.jug2 == other.jug2
-def __hash__(self):
-return hash((self.jug1, self.jug2))
-def dfs(current_state, visited, jug1_capacity, jug2_capacity, target_volume):
-if current_state.jug1 == target_volume or current_state.jug2 == target_volume:
-if current_state.jug1 == target_volume :
-print("Jug 1 now has", target_volume, "liters.")
-else:
-print("Jug 2 now has", target_volume, "liters.")
-return True
-visited.add(current_state)
-# Define all possible operations: (action, from_jug, to_jug)
-operations = [
-('Fill Jug 1', jug1_capacity, current_state.jug2),
-('Fill Jug 2', current_state.jug1, jug2_capacity),
-('Empty Jug 1', 0, current_state.jug2),
-('Empty Jug 2', current_state.jug1, 0),
-('Pour Jug 1 to Jug 2',
-max(0, current_state.jug1 + current_state.jug2 - jug2_capacity),
-min(jug2_capacity, current_state.jug1 + current_state.jug2)),
-('Pour Jug 2 to Jug 1',
-min(jug1_capacity, current_state.jug1 + current_state.jug2),
-max(0, current_state.jug1 + current_state.jug2 - jug1_capacity))
-]
-for operation in operations:
-action, new_jug1, new_jug2 = operation
-new_state = WaterJugState(new_jug1, new_jug2)
-if new_state not in visited:
-print(f"Trying: {action} => ({new_jug1}, {new_jug2})")
-if dfs(new_state, visited, jug1_capacity, jug2_capacity, target_volume):
-return True
-# print(new_jug1, new_jug2)
-return False
-def solve_water_jug_problem(jug1_capacity, jug2_capacity, target_volume):
-initial_state = WaterJugState(0, 0)
-visited = set()
-if dfs(initial_state, visited, jug1_capacity, jug2_capacity, target_volume):
-print("Solution found!")
-# print(jug1_capacity, jug2_capacity)
-else:
-print("Solution not possible.")
-# Example usage:
-jug1_capacity = int(input("Enter Jug 1 capacity : "))
-jug2_capacity = int(input("Enter Jug 1 capacity : "))
-target_volume = int(input("Enter Target Volume : "))
-print(f"Solving Water Jug Problem with capacities ({jug1_capacity}, {jug2_capacity}) to measure
-{target_volume} liters.")
-solve_water_jug_problem(jug1_capacity, jug2_capacity, target_volume)
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_VERTICES 100
+// Structure to represent a graph
+typedef struct {
+ int V;
+ int** adjMatrix;
+} Graph;
+// Function to create a new graph
+Graph* createGraph(int V) {
+ Graph* graph = (Graph*)malloc(sizeof(Graph));
+ graph->V = V;
+ graph->adjMatrix = (int**)calloc(V, sizeof(int*));
+ for (int i = 0; i < V; i++) graph->adjMatrix[i] = (int*)calloc(V, sizeof(int));
+ return graph;
+}
+// Function to add an edge to the graph
+void addEdge(Graph* graph, int src, int dest) {
+ graph->adjMatrix[src][dest] = 1;
+}
+// Function to perform topological sorting
+void topologicalSort(Graph* graph) {
+ int V = graph->V, inDegree[MAX_VERTICES] = {0}, 
+queue[MAX_VERTICES], front = 0, rear = -1;
+ for (int i = 0; i < V; i++)
+ for (int j = 0; j < V; j++)
+ if (graph->adjMatrix[i][j] == 1) inDegree[j]++;
+ for (int i = 0; i < V; i++) if (inDegree[i] == 0) queue[++rear] = i;
+ printf("Topological ordering of vertices: ");
+ while (front <= rear) {
+ int vertex = queue[front++];
+ printf("%d ", vertex);
+ for (int i = 0; i < V; i++) if (graph->adjMatrix[vertex][i] == 1 && --
+inDegree[i] == 0) queue[++rear] = i;
+ }
+ printf("\n");
+ }
+// Driver code
+int main() {
+ int V, E;
+ printf("Enter the number of vertices: ");
+ scanf("%d", &V);
+ Graph* graph = createGraph(V);
+ printf("Enter the number of edges: ");
+ scanf("%d", &E);
+ printf("Enter the edges (source vertex, destination vertex):\n");
+ for (int i = 0, src, dest; i < E; i++) {
+ scanf("%d %d", &src, &dest);
+ addEdge(graph, src, dest);
+ }
+ topologicalSort(graph);
+ return 0;
+}
+
