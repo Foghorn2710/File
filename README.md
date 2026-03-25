@@ -1,54 +1,93 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_VERTICES 100
-// Structure to represent a graph
-typedef struct {
- int V;
- int** adjMatrix;
-} Graph;
-// Function to create a new graph
-Graph* createGraph(int V) {
- Graph* graph = (Graph*)malloc(sizeof(Graph));
- graph->V = V;
- graph->adjMatrix = (int**)calloc(V, sizeof(int*));
- for (int i = 0; i < V; i++) graph->adjMatrix[i] = (int*)calloc(V, sizeof(int));
- return graph;
-}
-// Function to add an edge to the graph
-void addEdge(Graph* graph, int src, int dest) {
- graph->adjMatrix[src][dest] = 1;
-}
-// Function to perform topological sorting
-void topologicalSort(Graph* graph) {
- int V = graph->V, inDegree[MAX_VERTICES] = {0}, 
-queue[MAX_VERTICES], front = 0, rear = -1;
- for (int i = 0; i < V; i++)
- for (int j = 0; j < V; j++)
- if (graph->adjMatrix[i][j] == 1) inDegree[j]++;
- for (int i = 0; i < V; i++) if (inDegree[i] == 0) queue[++rear] = i;
- printf("Topological ordering of vertices: ");
- while (front <= rear) {
- int vertex = queue[front++];
- printf("%d ", vertex);
- for (int i = 0; i < V; i++) if (graph->adjMatrix[vertex][i] == 1 && --
-inDegree[i] == 0) queue[++rear] = i;
- }
- printf("\n");
- }
-// Driver code
-int main() {
- int V, E;
- printf("Enter the number of vertices: ");
- scanf("%d", &V);
- Graph* graph = createGraph(V);
- printf("Enter the number of edges: ");
- scanf("%d", &E);
- printf("Enter the edges (source vertex, destination vertex):\n");
- for (int i = 0, src, dest; i < E; i++) {
- scanf("%d %d", &src, &dest);
- addEdge(graph, src, dest);
- }
- topologicalSort(graph);
- return 0;
-}
+#include <time.h>
+// Function to merge two sorted arrays
+void merge(int arr[], int left, int mid, int right)
+{
+    int i, j, k;
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
+    int *L = (int *)malloc(n1 * sizeof(int));
+    int *R = (int *)malloc(n2 * sizeof(int));
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+    i = 0;
+    j = 0;
+    k = left;
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+        {
+            arr[k] = L[i];
+            i++;
+        }
+        else
+        {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1)
+    {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+    while (j < n2)
+    {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+    free(L);
+    free(R);
+}
+// Function to implement Merge Sort
+void mergeSort(int arr[], int left, int right)
+{
+    if (left < right)
+    {
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
+}
+// Function to generate random integers
+void generateRandomArray(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+        arr[i] = rand() % 100000; // Generate random integers between 0 and 99999
+}
+int main()
+{
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+    if (n <= 5000)
+    {
+        printf("Please enter a value greater than 5000\n");
+        return 1; // Exit if the number of elements is not greater than 5000
+    }
+    int *arr = (int *)malloc(n * sizeof(int));
+    if (arr == NULL)
+    {
+        printf("Memory allocation failed\n");
+        return 1; // Exit if memory allocation fails
+    }
+    generateRandomArray(arr, n);
+    // Repeat the sorting process multiple times to increase duration for timing
+    clock_t start = clock();
+    mergeSort(arr, 0, n - 1);
+    clock_t end = clock();
+    double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Time taken to sort %d elements: %f seconds\n", n, time_taken);
+    free(arr);
+    return 0;
+}
