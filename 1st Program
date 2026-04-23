@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void sort(int a[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int min = i; // Assume the first unsorted element is smallest
+        for (int j = i + 1; j < n; j++) {
+            if (a[j] < a[min]) {
+                min = j; // Found a smaller one!
+            }
+        }
+        // Swap the smallest found with the current position
+        int temp = a[min];
+        a[min] = a[i];
+        a[i] = temp;
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter n: ");
+    scanf("%d", &n);
+
+    int *a = malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++) a[i] = rand() % 1000;
+
+    clock_t start = clock();
+    sort(a, n);
+    clock_t end = clock();
+
+    printf("Time: %f\n", (double)(end - start) / CLOCKS_PER_SEC);
+    return 0;
+}
