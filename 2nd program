@@ -27,7 +27,7 @@ void quick(int a[], int first, int last) {
 
 int main() {
     int n;
-    printf("Enter n: ");
+    printf("Enter the element(n>5000): ");
     scanf("%d", &n);
 
     int *a = malloc(n * sizeof(int));
@@ -37,6 +37,6 @@ int main() {
     quick(a, 0, n - 1);
     clock_t end = clock();
 
-    printf("Time: %f\n", (double)(end - start) / CLOCKS_PER_SEC);
+    printf("Time taken to sort the element(n>5000): %f\n", (double)(end - start) / CLOCKS_PER_SEC);
     return 0;
 }
