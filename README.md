@@ -1,40 +1,51 @@
--- Create Table
+CREATE DATABASE jagan;
+
+USE jagan;
+
 CREATE TABLE Employee (
-    E_id NUMBER,
-    E_name VARCHAR2(10),
-    Age NUMBER,
-    Salary NUMBER
+    E_id INT,
+    E_name VARCHAR(10),
+    Age INT,
+    Salary INT
 );
 
--- Insert Records
 INSERT INTO Employee VALUES (10, 'abhi', 25, 10000);
 INSERT INTO Employee VALUES (20, 'rohith', 30, 9000);
 INSERT INTO Employee VALUES (30, 'david', 28, 9000);
 
--- Cursor Program
-SET SERVEROUTPUT ON;
+DELIMITER //
 
-DECLARE
-    CURSOR c1 IS
+CREATE PROCEDURE emp_cursor()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE v_id INT;
+    DECLARE v_sal INT;
+
+    DECLARE c1 CURSOR FOR
         SELECT E_id, Salary FROM Employee;
 
-    v_id Employee.E_id%TYPE;
-    v_sal Employee.Salary%TYPE;
-
-BEGIN
-    DBMS_OUTPUT.PUT_LINE('Emp ID    Emp Salary');
-    DBMS_OUTPUT.PUT_LINE('----------------------');
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+        SET done = 1;
 
     OPEN c1;
 
-    LOOP
+    read_loop: LOOP
+
         FETCH c1 INTO v_id, v_sal;
 
-        EXIT WHEN c1%NOTFOUND;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
 
-        DBMS_OUTPUT.PUT_LINE(v_id || '        ' || v_sal);
+        SELECT v_id AS Emp_ID,
+               v_sal AS Emp_Salary;
+
     END LOOP;
 
     CLOSE c1;
-END;
-/
+
+END //
+
+DELIMITER ;
+
+CALL emp_cursor();
