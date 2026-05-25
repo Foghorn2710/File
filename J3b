@@ -1,0 +1,25 @@
+begin
+file = open("D:/akshay.txt","r")
+count=0
+sum=0.0
+lar=-Inf
+small=Inf
+for line in eachline(file)
+num=parse(Float64,line)
+count+=1
+sum+=num
+if num>lar
+lar=num
+end
+if num<small
+small=num
+end
+end
+close(file)
+avg=sum/count
+println("Largest num: $lar")
+println("Smallest num: $small")
+println("Count of num: $count")
+println("Sum of num: $sum")
+println("Average of num: $avg")
+end
