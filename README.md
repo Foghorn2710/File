@@ -1,20 +1,41 @@
-function freq_letter(text::String)
-    freq = Dict{Char, Int}()
+function pop_artist()
+    artist = Vector{String}(undef, 10)
 
-    text = lowercase(text)
+    println("Enter the names of 10 pop artists:")
+    for i in 1:10
+        print("Enter the name of artist $i: ")
+        artist[i] = readline()
+    end
 
-    for char in text
-        if 'a' <= char <= 'z'
-            freq[char] = get(freq, char, 0) + 1
+    votes = Dict{Int, Int}()
+
+    for i in 1:10
+        votes[i] = 0
+    end
+
+    println("Enter the votes (a number between 1 and 10).")
+    println("Enter 'end' to stop voting:")
+
+    while true
+        vote = readline()
+
+        if vote == "end"
+            break
+        end
+
+        vote_number = tryparse(Int, vote)
+
+        if vote_number !== nothing && 1 <= vote_number <= 10
+            votes[vote_number] += 1
+        else
+            println("Invalid vote. Enter a number between 1 and 10.")
         end
     end
 
-    for char in 'a':'z'
-        count = get(freq, char, 0)
-        println("$char : $count")
+    println("\nVoting Results:")
+    for i in 1:10
+        println("$(artist[i]) : $(votes[i]) votes")
     end
 end
 
-println("Enter a text:")
-text = readline()
-freq_letter(text)
+pop_artist()
