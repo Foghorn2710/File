@@ -25,16 +25,27 @@ function pop_artist()
 
         vote_number = tryparse(Int, vote)
 
-        if vote_number !== nothing && 1 <= vote_number <= 10
+        if vote_number !== nothing && vote_number >= 1 && vote_number <= 10
             votes[vote_number] += 1
         else
-            println("Invalid vote. Enter a number between 1 and 10.")
+            println("Invalid vote, please try a number between 1 and 10.")
         end
     end
 
-    println("\nVoting Results:")
+    max_votes = 0
+    most_pop_artist = ""
+
     for i in 1:10
-        println("$(artist[i]) : $(votes[i]) votes")
+        if votes[i] > max_votes
+            max_votes = votes[i]
+            most_pop_artist = artist[i]
+        end
+    end
+
+    if max_votes > 0
+        println("The most popular artist is: $most_pop_artist with $max_votes votes.")
+    else
+        println("No votes were cast.")
     end
 end
 
