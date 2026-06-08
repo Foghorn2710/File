@@ -1,0 +1,12 @@
+using LinearAlgebra
+
+A = [4.0 2.0; 3.0 1.0]
+
+println("Det = ", det(A))
+println("Inverse = ", inv(A))
+println("Rank = ", rank(A))
+println("Upper = ", UpperTriangular(A))
+println("Lower = ", LowerTriangular(A))
+println("Diagonal = ", diag(A))
+println("Norm = ", norm(A))
+println("Square Root = ", sqrt(A))
