@@ -1,0 +1,19 @@
+using LinearAlgebra
+
+# Define matrices using standard Julia square bracket syntax
+A = [1 2; 3 4]
+B = [5 6; 7 8]
+
+# Define vectors for dot and cross products
+v1 = [1, 2, 3]
+v2 = [4, 5, 6]
+
+# Scalar value
+s = 2
+
+# Perform and print various multiplication operations
+println("Scalar Mult: ", A * s)
+println("Matrix Mult: ", A * B)
+println("Elementwise Mult: ", A .* B) # Uses the dot operator for element-wise operation
+println("Dot Product: ", dot(v1, v2))
+println("Cross Product: ", cross(v1, v2))
