@@ -1,0 +1,25 @@
+function freq_letter(text::String)
+    # Initialize an empty Dictionary with Char keys and Int values
+    freq = Dict{Char, Int}()
+    
+    # Convert text to lowercase to make the count case-insensitive
+    text = lowercase(text)
+    
+    # Loop through each character in the text
+    for char in text
+        if 'a' <= char <= 'z'
+            freq[char] = get(freq, char, 0) + 1
+        end
+    end
+    
+    # Print the frequency of each alphabet from 'a' to 'z'
+    for char in 'a':'z'
+        count = get(freq, char, 0)
+        println("$char = $count")
+    end
+end
+
+# Main program execution
+println("Enter a text: ")
+text = readline()
+freq_letter(text)
