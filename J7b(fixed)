@@ -1,0 +1,27 @@
+# Define the file path
+file_path = "c:/users/student/anaconda3/xyz.txt"
+
+# Read the entire file contents as a String
+file_contents = read(file_path, String)
+
+# Split text into words using a regular expression to handle arbitrary punctuation
+words = split(lowercase(file_contents), r"[^\w]+")
+
+# Initialize an empty Set to store unique String elements
+unique_words = Set{String}()
+
+# Loop through words and add non-empty strings to the set
+for word in words
+    if !isempty(word)
+        push!(unique_words, word)
+    end
+end
+
+# Sort the collected unique words alphabetically
+sorted_words = sort(collect(unique_words))
+
+# Print the final result
+println("Unique words found in the file:")
+for word in sorted_words
+    println(word)
+end
