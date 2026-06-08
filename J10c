@@ -1,0 +1,21 @@
+using Plots
+
+# Define the two functions
+eq(x) = sin(x) + sin(2x)
+eq1(x) = sin(2x) + sin(3x)
+
+# Generate data points for x
+x = 0:0.01:2pi
+
+# Plot the first function
+plot(x, eq.(x), 
+    label = "y = sin(x) + sin(2x)", 
+    xlabel = "x", 
+    ylabel = "y", 
+    title = "Multiple Plots of Trigonometry Functions"
+)
+
+# Overlay the second function on the same plot using the bang (!) operator
+plot!(x, eq1.(x), 
+    label = "y = sin(2x) + sin(3x)"
+)
