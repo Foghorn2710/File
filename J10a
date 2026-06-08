@@ -1,0 +1,13 @@
+using Plots
+
+x = -10:0.1:10
+y = x.^2
+
+# Solid line plot
+p1 = plot(x, y, xlabel="x", ylabel="y", title="Plot of y = x^2", label="solid", linestyle=:solid, legend=:topright)
+
+# Dotted line plot
+p2 = plot(x, y, xlabel="x", ylabel="y", title="Plot of y = x^2", label="dotted", linestyle=:dot, legend=:topright)
+
+# Display side-by-side
+plot(p1, p2, layout=(1, 2))
