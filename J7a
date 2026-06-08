@@ -1,0 +1,17 @@
+println("Enter a line of text: ")
+text = readline()
+
+# Initialize an empty Dictionary with Char keys and Int values
+letter_frequency = Dict{Char, Int}()
+
+# Loop through each character in the lowercase version of the text
+for char in lowercase(text)
+    if isletter(char)
+        letter_frequency[char] = get(letter_frequency, char, 0) + 1
+    end
+end
+
+# Sort the collected dictionary items by character keys and print them
+for (letter, frequency) in sort(collect(letter_frequency))
+    println("Letter $letter occurs $frequency times")
+end
